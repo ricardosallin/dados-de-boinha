@@ -24,14 +24,14 @@ with ids_times as (
   -- apenas 1 linha com os dados dos dois times
   -- o sistema escolhe dois paises aleatoriamente
   -- mas vc pode escolher dois fixos
-    -- cast(max(id) * random() as int)
-    1 -- Brazil, rank #5, 1804 pts
+    -- 1 -- Brazil, rank #5, 1804 pts
+    cast(max(id) * random() as int)
     as t1,
-    -- cast(max(id) * random() as int)
-    -- 11 -- Argentina, rank #1, 1925 pts
-    -- 97 -- Japan, rank #15, 1673 pts
-    141 -- Norway, rank #19, 1651 pts
-    -- 17 -- Bahamas, rank #207, 786 pts
+    -- 3 -- Argentina, rank #2, 1970 pts
+    -- 17 -- Japan, rank #17, 1673 pts
+    -- 19 -- Norway, rank #19, 1651 pts 
+    -- 206 -- Bahamas, rank #206, 786 pts
+    cast(max(id) * random() as int)
     as t2
     from sp.pais limit 1
 ), times as (
@@ -62,17 +62,20 @@ with ids_times as (
   nome1, sigla1, pts1, pts1*pts1 as quad_f1,
   nome2, sigla2, pts2, pts2*pts2 as quad_f2,
   quad_f1 + quad_f2 as soma_quads,
-  quad_f1 / soma_quads * 2.6 as ge1,
-  quad_f2 / soma_quads * 2.6 as ge2
+  case when forca1 > forca2 then forca1 else forca2 end as maior,
+  case when forca1 > forca2 then forca2 else forca1 end as menor,
+  (maior / menor -1) * 3 + 2.6 as Ge, --expectativa de gols no jogo (NÃO é o xG deles!!)
+  round(sq_forca1 / soma_quads * Ge, 6) as ge1, -- estes dois somam 1 * Ge
+  round(sq_forca2 / soma_quads * Ge, 6) as ge2, -- estes dois somam 1 * Ge
   from times
 )
 select
 -- temos 1 linha com os dados dos dois times e seus GEs
-nome1, sigla1, ge1,
-nome2, sigla2, ge2
+  t1, nome1, sigla1, forca1, ge1, 
+  t2, nome2, sigla2, forca2, ge2
 from calculos
 ;
-from sp.versus;
+-- from sp.versus;
 
 create or replace table sp.jogos as
 with jogos0 as (
@@ -121,7 +124,7 @@ COPY sp.resumos TO 'resumos.csv' (DELIMITER ';');
 create or replace table sp.resumo_gols as
 -- distribuição dos jogos por Qtd gols
 with base as (
-  select gols1, gols2, count(1) as qtd
+  select gols1, gols2, count() as qtd
   from sp.jogos
   group by all
 )
