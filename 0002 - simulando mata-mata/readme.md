@@ -85,16 +85,12 @@ Após estudar este experimento você terá contato com:
 | chave | "Molde" para montar a chave em cada multiverso |
 | fase_atual | Tabela temporária com a parcela da chave correspondente à fase atual (oitavas, quartas etc) |
 | jogos | Jogos do campeonato, com infos dos dois países e (depois do jogo) o placar |
-| resultados_90min, _120min, _penaltis | Tabelas temporárias com os gols em cada etapa de cada jogo |
+| resultados_90min\nresultados_120min\n_resultadospenaltis | Tabelas temporárias com os gols em cada etapa de cada jogo |
 | resumo_jogos | Tabela temporária para indicar ao DuckDB qual a próxima fase |
 
 ---
 
 # 📈 Resultados
-
-O que o projeto produz?
-
-Exemplo:
 
 - Classificação final dos países por quantidade de multiversos em que foi campeão
 - Histórico completo de todos os jogos em todos os multiversos
@@ -105,8 +101,8 @@ Exemplo:
 # 🧪 O que o modelo NÃO capta
 
 - Qualidade individual de jogadores
-- Fator casa
 - Efeitos psicológicos (euforia, apatia) durante o jogo>
+	- Fator casa/torcida
 	- Cartões
 	- Lesões
 - Clima
