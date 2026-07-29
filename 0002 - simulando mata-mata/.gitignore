@@ -1,0 +1,44 @@
+# Executável do DuckDB
+duckdb.exe
+
+# Banco temporário
+*.db
+*.wal
+*.duckdb
+*.sqlite
+
+# Arquivos de saída
+out/*
+
+# Mantém a pasta no repositório
+!out/.gitkeep
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Ambiente virtual
+venv/
+.venv/
+
+# Configurações do VS Code/Idea
+.vscode/
+.idea/
+
+# Configurações do Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# outros
+.xls
+.xlsx
