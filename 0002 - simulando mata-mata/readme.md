@@ -101,7 +101,7 @@ Após estudar este experimento você terá contato com:
 # 🧪 O que o modelo NÃO capta
 
 - Qualidade individual de jogadores
-- Efeitos psicológicos (euforia, apatia) durante o jogo>
+- Efeitos psicológicos (euforia, apatia) durante o jogo:
 	- Fator casa/torcida
 	- Cartões
 	- Lesões
