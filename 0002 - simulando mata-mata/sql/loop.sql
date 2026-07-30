@@ -60,7 +60,6 @@ with base as (
   time2, sigla2, forca2, 
   (sqrt(-2 * ln(random())) * cos(2 * pi() * random())) * ge2 + ge2 as g2,
   from mm.jogos
-  inner join generate_series(1, 1) as s(id) on 1=1
   where vencedor is null -- so jogos que ainda nao aconteceram
 )
 select jogo, multiverso, time1, sigla1, time2, sigla2, 

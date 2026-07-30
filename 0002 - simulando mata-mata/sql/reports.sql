@@ -43,6 +43,30 @@ COPY (
 ) TO './/out//campanhas.csv' (HEADER, DELIMITER ';');
 
 
+-- Quantas taças/finais/semis/quartas cada país alcançou?
+COPY (
+  with base0 as (
+    select multiverso, fase, nome1 as pais,
+    case when time1 = vencedor then 1 else 0 end as venceu
+    from mm.jogos
+    union all
+    select multiverso, fase, nome2,
+    case when time2 = vencedor then 1 else 0 end as venceu
+    from mm.jogos
+  ),
+  camps as (select pais, sum(venceu) as qtd_campeoes from base0 where fase = 'FINAL'   group by 1),
+  fins  as (select pais, count()     as qtd_finais   from base0 where fase = 'FINAL'   group by 1),
+  semis as (select pais, count()     as qtd_semis    from base0 where fase = 'semi'    group by 1),
+  quas  as (select pais, count()     as qtd_quartas  from base0 where fase = 'quartas' group by 1)
+  select q4.*, qtd_semis, qtd_finais, qtd_campeoes
+  from            quas  q4
+  left outer join semis q2 on q4.pais = q2.pais
+  left outer join fins  q1 on q4.pais = q1.pais
+  left outer join camps q0 on q4.pais = q0.pais
+  order by 5 desc
+) TO './/out//qtds_tacas.csv' (HEADER, DELIMITER ';');
+
+
 -- BACKUP de todos os jogos!!
 COPY (
   select multiverso, fase, sigla1 || ' (' || forca1 || ' pts) x (' || forca2 || ' pts) ' || sigla2 as duelo, placar, 
