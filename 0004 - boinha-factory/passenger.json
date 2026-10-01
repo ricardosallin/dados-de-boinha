@@ -1,0 +1,13 @@
+{
+  "entity": "passenger",
+  "table": "passengers",
+  "fields": {
+    "id": {"type": "uuid"},
+    "name": {"type": "name"},
+    "email": {"type": "email"},
+    "phone": {"type": "phone_number"},
+    "city": {"type": "city"},
+    "rating": {"type": "float", "min": 4.0, "max": 5.0, "decimals": 2},
+    "created_at": {"type": "datetime"}
+  }
+}
